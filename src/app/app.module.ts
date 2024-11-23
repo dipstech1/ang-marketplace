@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonComponent } from './shared/ui/button/button.component';
+import { DatatableComponent } from './example/datatable/datatable.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { ButtonComponent } from './shared/ui/button/button.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ButtonComponent
+    DatatableComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

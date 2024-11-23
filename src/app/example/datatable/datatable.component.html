@@ -1,0 +1,12 @@
+<app-datatable
+  [tableColumns]="tableColumns"
+  [tableData]="tableData">
+</app-datatable>
+
+<ng-template #dyData let-data="data">
+  <span class="badge badge-dark" style="color: red;">{{data}}</span>
+</ng-template>
+
+<ng-template #edit let-data="data">
+    <button (click)="editData(data)">Edit</button>
+</ng-template>
