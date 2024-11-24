@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DatatableComponent } from './example/datatable/datatable.component';
+import { ExpModalComponent } from './example/exp-modal/exp-modal.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { DatatableComponent } from './example/datatable/datatable.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DatatableComponent
+    ExpModalComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
