@@ -16,7 +16,8 @@
   
       <td mat-cell *matCellDef="let element">
         <span *ngIf="!disCol.template; else showTemplate">
-          {{ disCol.cell(element) }}
+          <!-- {{ disCol.cell(element) }} -->
+            {{element[disCol.columnDef]}}
         </span>
 
         <ng-template #showTemplate>
