@@ -9,17 +9,22 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MenuContextualService } from '../../service/menu-context.service';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { SelectionModel } from '@angular/cdk/collections';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-datatable',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatSortModule,MatPaginatorModule, OverlayModule,MatIconModule, ReactiveFormsModule],
+  imports: [CommonModule, MatTableModule, MatSortModule,MatPaginatorModule, OverlayModule,MatIconModule, ReactiveFormsModule, MatCheckboxModule],
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss']
 })
 export class DatatableComponent<T> implements OnInit,AfterViewInit  {
   @Input()
   tableColumns: Array<Column> = [];
+
+  @Input()
+  allowSelectionCheckbox : boolean = false
 
   @Input()
   tableData: Array<T> = [];
@@ -31,6 +36,7 @@ export class DatatableComponent<T> implements OnInit,AfterViewInit  {
   displayedColumns: Array<string> = [];
   searchTxt:FormControl = new FormControl();
   dataSource: MatTableDataSource<T> = new MatTableDataSource();
+  selection = new SelectionModel<T>(true, []);
 
   popUpService = inject(MenuContextualService);
 
@@ -39,6 +45,9 @@ export class DatatableComponent<T> implements OnInit,AfterViewInit  {
 
   ngOnInit(): void {    
     this.displayedColumns = this.tableColumns.map((c) => c.columnDef);
+    if(this.allowSelectionCheckbox){
+      this.displayedColumns = ["select", ...this.displayedColumns]
+    }
     this.dataSource = new MatTableDataSource(this.tableData);
   }
 
@@ -67,4 +76,16 @@ export class DatatableComponent<T> implements OnInit,AfterViewInit  {
     this.searchTxt.setValue('')
   }
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 }

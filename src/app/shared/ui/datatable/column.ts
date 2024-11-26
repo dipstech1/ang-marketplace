@@ -1,12 +1,12 @@
 export interface Column {
     columnDef: string;
     header: string;
-    cell: Function;
-    sort:boolean,
+    cell?: Function;
+    sort?:boolean,
     isLink?: boolean;
     url?: string;
     template ? :any,
-    filter:IFilter
+    filter?:IFilter
   }
 
   interface IFilter{

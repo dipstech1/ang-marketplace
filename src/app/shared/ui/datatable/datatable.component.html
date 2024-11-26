@@ -1,19 +1,33 @@
 <table mat-table matSort matSortDisableClear [dataSource]="dataSource" class="mat-elevation-z8"
   (matSortChange)="sortData($event)">
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select" *ngIf="allowSelectionCheckbox">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
   <ng-container *ngFor="let disCol of tableColumns let colIndex = index;" matColumnDef="{{disCol.columnDef}}">
     <ng-container>
-      <th mat-header-cell  *matHeaderCellDef>
+      <th mat-header-cell *matHeaderCellDef>
         <div class="filter_sort_container">
           <span *ngIf="disCol.sort" mat-sort-header>{{ disCol.header }}</span>
           <span *ngIf="!disCol.sort">{{ disCol.header }}</span>
           <span #mybutton>
-            <mat-icon aria-hidden="false"  aria-label="arrow_drop_down" class="filter" (click)="open(mybutton,tpl); $event.stopPropagation()">arrow_drop_down</mat-icon>
+            <mat-icon aria-hidden="false" aria-label="arrow_drop_down" class="filter"
+              (click)="open(mybutton,tpl); $event.stopPropagation()">arrow_drop_down</mat-icon>
           </span>
         </div>
 
       </th>
     </ng-container>
-    
+
     <td mat-cell *matCellDef="let element">
       <span *ngIf="!disCol.template; else showTemplate">
         <!-- {{ disCol.cell(element) }} -->
@@ -21,7 +35,9 @@
       </span>
 
       <ng-template #showTemplate>
-        <ng-template [ngTemplateOutlet]="disCol?.template" [ngTemplateOutletContext]="{data:disCol.cell(element)}">
+        <!-- <ng-template [ngTemplateOutlet]="disCol?.template" [ngTemplateOutletContext]="{data:disCol.cell(element)}">
+        </ng-template> -->
+        <ng-template [ngTemplateOutlet]="disCol?.template" [ngTemplateOutletContext]="{data:element[disCol.columnDef]}">
         </ng-template>
 
       </ng-template>
@@ -40,8 +56,8 @@
 
 
 <ng-template #tpl let-close="close" let-data>
-  <div class="popover" >
-    <input placeholder="Search" [formControl] ="searchTxt"/>
+  <div class="popover">
+    <input placeholder="Search" [formControl]="searchTxt" />
     <button (click)="searchFilter()">Search</button>
   </div>
 </ng-template>
