@@ -5,5 +5,11 @@ export interface Column {
     sort:boolean,
     isLink?: boolean;
     url?: string;
-    template ? :any
+    template ? :any,
+    filter:IFilter
+  }
+
+  interface IFilter{
+    canFilter : boolean,
+    filterId : string
   }

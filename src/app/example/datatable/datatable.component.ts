@@ -44,7 +44,8 @@ export class DatatableComponent {
         columnDef: 'position',
         header: 'Position',
         cell: (element: Record<string, any>) => `${element['position']}`,
-        sort : true
+        sort : true,
+        filter:{canFilter:true,filterId : 'position'}
       },
       {
         columnDef: 'name',
@@ -52,20 +53,23 @@ export class DatatableComponent {
         cell: (element: Record<string, any>) => `${element['name']}`,
         isLink: false,
         url: 'abc',
-        sort : false
+        sort : false,
+        filter:{canFilter:false,filterId : ''}
       },
       {
         columnDef: 'weight',
         header: 'Weight',
         cell: (element: Record<string, any>) => `${element['weight']}`,
-        sort : true
+        sort : true,
+        filter:{canFilter:true,filterId : 'weight'}
       },
       {
         columnDef: 'symbol',
         header: 'Symbol',
         cell: (element: Record<string, any>) => `${element['symbol']}`,
         template: this.dyData,
-        sort : true
+        sort : true,
+        filter:{canFilter:true,filterId : 'symbol'}
       }
     ]
   }
